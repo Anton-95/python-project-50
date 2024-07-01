@@ -13,7 +13,7 @@ package-install: # project install
 package-reinstall: #reinstall project
 	python3 -m pip install --user --force-reinstall dist/*whl
 
-lint:
+linter:
 	poetry run flake8 gendiff
 
 tests:
