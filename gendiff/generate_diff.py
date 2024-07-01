@@ -5,7 +5,6 @@ def generate_diff(path_file1, path_file2):
 
     file1 = json.load(open(path_file1))
     file2 = json.load(open(path_file2))
-    result_string = ''
     result_dict = {}
 
     for key, value in file1.items():
@@ -23,13 +22,16 @@ def generate_diff(path_file1, path_file2):
         if file1.get(key) is None:
             result_dict[f'  + {key}'] = value
 
+    return '{' + '\n' + make_sorted_string(result_dict) + '}'
+
+
+def make_sorted_string(dictionary):
+    sorted_string = ''
     sorted_dict = dict(sorted(
-        result_dict.items(), key=lambda x: (x[0].strip(' -+'), x[0][0])))
-
+        dictionary.items(), key=lambda x: (x[0].strip(' -+'), x[0][0])))
     for key, value in sorted_dict.items():
-        result_string += f'{key}: {value}\n'
-
-    return '{' + '\n' + result_string + '}'
+        sorted_string += f'{key}: {value}\n'
+    return sorted_string
 
 
 def is_true_or_false(value):
