@@ -1,28 +1,20 @@
 import json
+import yaml
 
 
-def generate_diff(path_file1, path_file2):
+def opened_files(path_file1, path_file2):
+    if path_file1.endswith('yaml') or path_file1.endswith('yml'):
+        with open(path_file1, 'r') as yml_file:
+            file1 = yaml.safe_load(yml_file)
+    else:
+        file1 = json.load(open(path_file1))
 
-    file1 = json.load(open(path_file1))
-    file2 = json.load(open(path_file2))
-    result_dict = {}
-
-    for key, value in file1.items():
-        value = is_true_or_false(value)
-        if file2.get(key) == file1[key]:
-            result_dict[f'    {key}'] = value
-        elif file2.get(key) is None:
-            result_dict[f'  - {key}'] = value
-        elif file2.get(key) != file1[key] is not None:
-            result_dict[f'  - {key}'] = value
-            result_dict[f'  + {key}'] = file2[key]
-
-    for key, value in file2.items():
-        value = is_true_or_false(value)
-        if file1.get(key) is None:
-            result_dict[f'  + {key}'] = value
-
-    return '{' + '\n' + make_sorted_string(result_dict) + '}'
+    if path_file2.endswith('yaml') or path_file2.endswith('yml'):
+        with open(path_file2, 'r') as yml_file:
+            file2 = yaml.safe_load(yml_file)
+    else:
+        file2 = json.load(open(path_file2))
+    return file1, file2
 
 
 def make_sorted_string(dictionary):
