@@ -21,4 +21,4 @@ def generate_diff(path_file1, path_file2):
         if file1.get(key) is None:
             result_dict[f'  + {key}'] = value
 
-    return '{' + '\n' + make_sorted_string(result_dict) + '}'
+    return make_sorted_string(result_dict)

@@ -23,7 +23,7 @@ def make_sorted_string(dictionary):
         dictionary.items(), key=lambda x: (x[0].strip(' -+'), x[0][0])))
     for key, value in sorted_dict.items():
         sorted_string += f'{key}: {value}\n'
-    return sorted_string
+    return '{' + '\n' + sorted_string + '}'
 
 
 def is_true_or_false(value):
