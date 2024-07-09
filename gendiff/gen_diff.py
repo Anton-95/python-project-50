@@ -28,7 +28,7 @@ def generate_diff(path_file1, path_file2, formatter=stylish):
         for key, value in file2.items():
             value = is_true_or_false_or_none(value)
             if not isinstance(value, dict):
-                if file1.get(key) is None:
+                if file1.get(key) is None or file1.get(key) != value:
                     result_dict[f'+ {key}'] = value
             elif isinstance(value, dict):
                 if isinstance(file1.get(key), dict):
