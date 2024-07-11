@@ -3,39 +3,54 @@ import pytest
 
 
 @pytest.fixture
-def result_json_string():
-    with open('tests/fixtures/result_flat_string.txt', 'r') as json_string:
-        content = json_string.read()
+def stylish_flat_string():
+    with open('tests/fixtures/stylish_flat_string.txt',
+              'r') as stylish_flat_string:
+        content = stylish_flat_string.read()
         return content
 
 
 @pytest.fixture
-def result_nested_json_string():
-    with open('tests/fixtures/result_nested_string.txt',
-              'r')as json_nested_string:
-        content = json_nested_string.read()
+def stylish_nested_string():
+    with open('tests/fixtures/stylish_nested_string.txt',
+              'r')as stylish_nested_string:
+        content = stylish_nested_string.read()
         return content
 
 
-def test_generate_diff_primitive_json(result_json_string):
+@pytest.fixture
+def plain_nested_string():
+    with open('tests/fixtures/plain_nested_string.txt',
+              'r') as plain_nested_string:
+        content = plain_nested_string.read()
+        return content
+
+
+def test_generate_diff_flat_stylish(stylish_flat_string):
     file1 = 'tests/fixtures/flat_file1.json'
     file2 = 'tests/fixtures/flat_file2.json'
-    assert generate_diff(file1, file2) == result_json_string
+    assert generate_diff(file1, file2) == stylish_flat_string
 
-
-def test_genetrate_diff_primitive_yaml(result_json_string):
     file1 = 'tests/fixtures/flat_file1.yml'
     file2 = 'tests/fixtures/flat_file2.yml'
-    assert generate_diff(file1, file2) == result_json_string
+    assert generate_diff(file1, file2) == stylish_flat_string
 
 
-def test_generate_diff_nested_json(result_nested_json_string):
+def test_generate_diff_nested_stylish(stylish_nested_string):
     file1 = 'tests/fixtures/nested_file3.json'
     file2 = 'tests/fixtures/nested_file4.json'
-    assert generate_diff(file1, file2) == result_nested_json_string
+    assert generate_diff(file1, file2) == stylish_nested_string
 
-
-def test_generate_diff_nested_yaml(result_nested_json_string):
     file1 = 'tests/fixtures/nested_file3.yml'
     file2 = 'tests/fixtures/nested_file4.yml'
-    assert generate_diff(file1, file2) == result_nested_json_string
+    assert generate_diff(file1, file2) == stylish_nested_string
+
+
+def test_generate_diff_flat_plain(plain_nested_string):
+    file1 = 'tests/fixtures/nested_file3.json'
+    file2 = 'tests/fixtures/nested_file4.json'
+    assert generate_diff(file1, file2, formatter=plain)
+
+    file1 = 'tests/fixtures/nested_file3.yml'
+    file2 = 'tests/fixtures/nested_file4.yml'
+    assert generate_diff(file1, file2, formatter=plain)
