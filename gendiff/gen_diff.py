@@ -1,4 +1,4 @@
-from gendiff.formatters import stylish
+from gendiff.formatters import stylish, plain
 import json
 import yaml
 
@@ -68,7 +68,10 @@ def generate_diff(path_file1, path_file2, formatter=stylish):
                               'status': 'changed'}]
 
         return diff
-    return formatter(iter_(file1, file2))
+    if formatter == plain:
+        return plain(iter_(file1, file2))
+    else:
+        return stylish(iter_(file1, file2))
 
 
 def is_true_or_false_or_none(value):
