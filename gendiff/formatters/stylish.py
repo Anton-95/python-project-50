@@ -84,14 +84,3 @@ def gen_nested_format(diff, replacer=' ', spaces_count=4, depth=0):
 
     result = '{\n' + result_string + (replacer * (depth - spaces_count)) + '}\n'
     return result.strip('\n')
-
-
-# def sorting_dict(diff_dict):
-#     sorted_dict = dict(sorted(
-#         diff_dict.items(), key=lambda x: (x[0].strip(' -+'), x[0][1])))
-#     for key, value in sorted_dict.items():
-#         if not isinstance(value, dict):
-#             sorted_dict[key] = value
-#         else:
-#             sorted_dict[key] = sorting_dict(value)
-#     return sorted_dict

@@ -31,7 +31,8 @@ def gen_plain_format(diff, path=''):
             elif value['status'] == 'deleted':
                 result_string += f"Property '{path.strip('.')}' was removed"
                 path = path[0:-len(value.get('key')) - 1]
-            result_string += f'{gen_plain_format(value.get('children'), path)}\n'
+            result_string += (f'{gen_plain_format(value.get('children'),
+                              path)}\n')
             path = path[0:-len(value.get('key')) - 1]
 
     return result_string.strip('\n')
