@@ -1,5 +1,5 @@
 from gendiff import generate_diff
-from gendiff.formatters import stylish, plain
+from gendiff.formatters import stylish, plain, json
 import pytest
 
 
@@ -32,6 +32,14 @@ def plain_nested_string():
     with open('tests/fixtures/plain_nested_string.txt',
               'r') as plain_nested_string:
         content = plain_nested_string.read()
+        return content
+
+
+@pytest.fixture
+def json_string():
+    with open('tests/fixtures/json_string.txt',
+              'r') as json_string:
+        content = json_string.read()
         return content
 
 
@@ -73,3 +81,9 @@ def test_generate_diff_nested_plain(plain_nested_string):
     file1 = 'tests/fixtures/nested_file3.yml'
     file2 = 'tests/fixtures/nested_file4.yml'
     assert generate_diff(file1, file2, formatter=plain) == plain_nested_string
+
+
+def test_generate_diff_json(json_string):
+    file1 = 'tests/fixtures/nested_file3.json'
+    file2 = 'tests/fixtures/nested_file4.json'
+    assert generate_diff(file1, file2, formatter=json) == json_string
