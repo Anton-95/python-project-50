@@ -1,5 +1,5 @@
-from gendiff.formatters import stylish, plain
-import json
+from gendiff.formatters import stylish, plain, json
+import json as jsn
 import yaml
 
 
@@ -70,6 +70,8 @@ def generate_diff(path_file1, path_file2, formatter=stylish):
         return diff
     if formatter == plain:
         return plain(iter_(file1, file2))
+    elif formatter == json:
+        return json(iter_(file1, file2))
     else:
         return stylish(iter_(file1, file2))
 
@@ -89,11 +91,11 @@ def opening_files(path_file1, path_file2):
         with open(path_file1, 'r') as yml_file:
             file1 = yaml.safe_load(yml_file)
     else:
-        file1 = json.load(open(path_file1))
+        file1 = jsn.load(open(path_file1))
 
     if path_file2.endswith('yaml') or path_file2.endswith('yml'):
         with open(path_file2, 'r') as yml_file:
             file2 = yaml.safe_load(yml_file)
     else:
-        file2 = json.load(open(path_file2))
+        file2 = jsn.load(open(path_file2))
     return file1, file2
