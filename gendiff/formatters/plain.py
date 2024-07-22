@@ -43,5 +43,7 @@ def is_bool_or_list(value):
         return '[complex value]'
     elif value == 'true' or value == 'false' or value == 'null':
         return f'{value}'
+    elif isinstance(value, int):
+        return value
     else:
         return f"'{value}'"
