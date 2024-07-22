@@ -3,7 +3,7 @@ import json as jsn
 import yaml
 
 
-def generate_diff(path_file1, path_file2, formatter=stylish):
+def generate_diff(path_file1, path_file2, formatter='stylish'):
     file1, file2 = opening_files(path_file1, path_file2)
 
     def iter_(file1, file2):
@@ -68,11 +68,11 @@ def generate_diff(path_file1, path_file2, formatter=stylish):
                               'status': 'changed'}]
 
         return diff
-    if formatter == plain:
+    if formatter == 'plain':
         return plain(iter_(file1, file2))
-    elif formatter == json:
+    elif formatter == 'json':
         return json(iter_(file1, file2))
-    else:
+    elif formatter == 'stylish':
         return stylish(iter_(file1, file2))
 
 
