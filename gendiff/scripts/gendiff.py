@@ -16,9 +16,13 @@ def main():
         print(generate_diff(args.first_file, args.second_file,
                             formatter='stylish'))
     elif args.format == 'plain':
-        print(generate_diff(args.first_file, args.second_file, formatter='plain'))
+        print(generate_diff(args.first_file,
+                            args.second_file,
+                            formatter='plain'))
     elif args.format == 'json':
-        print(generate_diff(args.first_file, args.second_file, formatter='json'))
+        print(generate_diff(args.first_file,
+                            args.second_file,
+                            formatter='json'))
     else:
         print(generate_diff(args.first_file, args.second_file,
                             formatter='stylish'))
