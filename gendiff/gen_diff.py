@@ -1,10 +1,9 @@
-from gendiff.formatters import stylish, plain, json
-import json as jsn
-import yaml
+from gendiff.formatters import format_selection
+from gendiff.load_files import opening_files
 
 
 def generate_diff(path_file1, path_file2, formatter='stylish'):
-    file1, file2 = opening_files(path_file1, path_file2)
+    file1, file2 = opening_files(path_file1), opening_files(path_file2)
 
     def iter_(file1, file2):
 
@@ -66,14 +65,8 @@ def generate_diff(path_file1, path_file2, formatter='stylish'):
                               'old_value': iter_(value1, value1),
                               'new_value': value2,
                               'status': 'changed'}]
-
         return diff
-    if formatter == 'plain':
-        return plain(iter_(file1, file2))
-    elif formatter == 'json':
-        return json(iter_(file1, file2))
-    elif formatter == 'stylish':
-        return stylish(iter_(file1, file2))
+    return format_selection(iter_(file1, file2), formatter)
 
 
 def is_true_or_false_or_none(value):
@@ -84,18 +77,3 @@ def is_true_or_false_or_none(value):
     elif value is False:
         return 'false'
     return value
-
-
-def opening_files(path_file1, path_file2):
-    if path_file1.endswith('yaml') or path_file1.endswith('yml'):
-        with open(path_file1, 'r') as yml_file:
-            file1 = yaml.safe_load(yml_file)
-    else:
-        file1 = jsn.load(open(path_file1))
-
-    if path_file2.endswith('yaml') or path_file2.endswith('yml'):
-        with open(path_file2, 'r') as yml_file:
-            file2 = yaml.safe_load(yml_file)
-    else:
-        file2 = jsn.load(open(path_file2))
-    return file1, file2
