@@ -12,7 +12,7 @@ def gen_plain_format(diff, path=''):
             elif value['status'] == 'added':
                 result_string += (f"Property '{path.strip('.')}' "
                                   f"was added with value: "
-                                  f"{value_convers(value['value'])}\n")
+                                  f"{to_str(value['value'])}\n")
                 path = path[0:-len(value['key']) - 1]
 
             elif value['status'] == 'deleted':
@@ -21,8 +21,8 @@ def gen_plain_format(diff, path=''):
 
             elif value['status'] == 'changed':
                 result_string += (f"Property '{path.strip('.')}' was updated. "
-                                  f"From {value_convers(value['old_value'])} "
-                                  f"to {value_convers(value['new_value'])}\n")
+                                  f"From {to_str(value['old_value'])} "
+                                  f"to {to_str(value['new_value'])}\n")
                 path = path[0:-len(value['key']) - 1]
 
         elif value.get('status') == 'nested':
@@ -42,7 +42,7 @@ def gen_plain_format(diff, path=''):
     return result_string.strip('\n')
 
 
-def value_convers(value):
+def to_str(value):
     if isinstance(value, list):
         return '[complex value]'
     elif value is None:

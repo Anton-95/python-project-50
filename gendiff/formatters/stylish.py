@@ -14,7 +14,7 @@ def gen_nested_format(diff, replacer=' ', spaces_count=4, depth=0):
                                                              spaces_count,
                                                              depth)}\n')
                 else:
-                    value['value'] = value_convers(value['value'])
+                    value['value'] = to_str(value['value'])
                     result_string += (
                         f'{(depth - 2) * replacer}+ '
                         f'{value['key']}: {value['value']}\n')
@@ -28,7 +28,7 @@ def gen_nested_format(diff, replacer=' ', spaces_count=4, depth=0):
                                                            spaces_count,
                                                            depth)}\n')
                 else:
-                    value['value'] = value_convers(value['value'])
+                    value['value'] = to_str(value['value'])
                     result_string += (f'{(depth - 2) * replacer}- '
                                       f'{value['key']}: {value['value']}\n')
 
@@ -41,15 +41,15 @@ def gen_nested_format(diff, replacer=' ', spaces_count=4, depth=0):
                                                            spaces_count,
                                                            depth)}\n')
                 else:
-                    value['value'] = value_convers(value['value'])
+                    value['value'] = to_str(value['value'])
                     result_string += (f'{depth * replacer}'
                                       f'{value['key']}: {value['value']}\n')
 
             elif value.get('status') == 'changed':
                 if not isinstance(value['old_value'], list) and \
                    not isinstance(value['new_value'], list):
-                    value['old_value'] = value_convers(value['old_value'])
-                    value['new_value'] = value_convers(value['new_value'])
+                    value['old_value'] = to_str(value['old_value'])
+                    value['new_value'] = to_str(value['new_value'])
                     result_string += (f'{(depth - 2) * replacer}- '
                                       f'{value['key']}: {value['old_value']}\n')
                     result_string += (f'{(depth - 2) * replacer}+ '
@@ -57,7 +57,7 @@ def gen_nested_format(diff, replacer=' ', spaces_count=4, depth=0):
 
                 elif isinstance(value['old_value'], list) and \
                         not isinstance(value['new_value'], list):
-                    value['new_value'] = value_convers(value['new_value'])
+                    value['new_value'] = to_str(value['new_value'])
                     result_string += (f'{(depth - 2) * replacer}- '
                                       f'{value['key']}: '
                                       f'{gen_nested_format(value['old_value'],
@@ -69,7 +69,7 @@ def gen_nested_format(diff, replacer=' ', spaces_count=4, depth=0):
 
                 elif not isinstance(value['old_value'], list) and \
                         isinstance(value['new_value'], list):
-                    value['old_value'] = value_convers(value['old_value'])
+                    value['old_value'] = to_str(value['old_value'])
                     result_string += (f'{(depth - 2) * replacer}- '
                                       f'{value['key']}: {value['old_value']}\n')
                     result_string += (f'{(depth - 2) * replacer}+ '
@@ -91,7 +91,7 @@ def gen_nested_format(diff, replacer=' ', spaces_count=4, depth=0):
     return result.strip('\n')
 
 
-def value_convers(value):
+def to_str(value):
     if value is None:
         return 'null'
     elif value is True:
