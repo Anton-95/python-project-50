@@ -1,9 +1,12 @@
 #!usr/bin/env python3
-from gendiff import input_args
+from gendiff import parse_arguments, generate_diff
 
 
 def main():
-    input_args()
+    args = parse_arguments()
+    print(generate_diff(args.first_file,
+                        args.second_file,
+                        formatter=args.format))
 
 
 if __name__ == '__main__':

@@ -1,8 +1,8 @@
 from gendiff.gen_diff import generate_diff
-from gendiff.cli import input_args
+from gendiff.argparse import parse_arguments
 
 
 __all__ = (
     'generate_diff',
-    'input_args'
+    'parse_arguments'
 )
