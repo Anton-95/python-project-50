@@ -10,10 +10,3 @@ def format_selection(diff, formatter):
         return json(diff)
     elif formatter == 'stylish':
         return stylish(diff)
-
-
-__all__ = (
-    'plain',
-    'stylish',
-    'json'
-)
