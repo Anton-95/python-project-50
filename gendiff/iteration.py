@@ -1,9 +1,11 @@
 def iteration(file1, file2):
 
     keys = file1.keys() | file2.keys()
+    sorted_keys = sorted(keys)
+
     diff = []
 
-    for key in keys:
+    for key in sorted_keys:
         value1 = file1.get(key)
         value2 = file2.get(key)
 
@@ -53,5 +55,4 @@ def iteration(file1, file2):
                 diff += [{'key': key,
                           'value': value1}]
 
-    diff = sorted(diff, key=lambda x: x.get('key'))
     return diff
