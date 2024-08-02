@@ -11,4 +11,5 @@ def load_file(path_file):
         file = json.load(open(path_file))
         return file
     else:
-        raise ValueError("Unsupported file format. Expected '.yaml', '.yml' or '.json'.")
+        raise ValueError("Unsupported file format. \
+Expected '.yaml', '.yml' or '.json'.")
