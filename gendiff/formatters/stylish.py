@@ -72,7 +72,7 @@ def gen_nested_format(diff, replacer=' ', spaces_count=4, depth=0):
                     value['old_value'] = to_str(value['old_value'])
                     result_string += (f'{(depth - 2) * replacer}- '
                                       f'{value['key']}: {value['old_value']}\n')
-                    result_string += (f'{(depth - 2) * replacer}- '
+                    result_string += (f'{(depth - 2) * replacer}+ '
                                       f'{value['key']}: '
                                       f'{iteration_dict(value['new_value'],
                                                         depth,
