@@ -43,7 +43,7 @@ def gen_plain_format(diff, path=''):
 
 
 def to_str(value):
-    if isinstance(value, list):
+    if isinstance(value, list) or isinstance(value, dict):
         return '[complex value]'
     elif value is None:
         return 'null'
