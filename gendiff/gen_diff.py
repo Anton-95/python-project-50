@@ -1,5 +1,5 @@
 from gendiff.formatters import format_selection
-from gendiff.load_files import load_file
+from gendiff.parser import load_file
 from gendiff.iteration import iteration
 
 
