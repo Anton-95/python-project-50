@@ -1,4 +1,4 @@
-def iteration(file1, file2):
+def builder(file1, file2):
 
     keys = file1.keys() | file2.keys()
     sorted_keys = sorted(keys)
@@ -11,7 +11,7 @@ def iteration(file1, file2):
 
         if isinstance(value1, dict) and isinstance(value2, dict):
             diff.append({'key': key,
-                         'value': iteration(value1, value2),
+                         'value': builder(value1, value2),
                          'status': 'nested'})
 
         else:
