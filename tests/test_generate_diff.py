@@ -2,87 +2,28 @@ from gendiff import generate_diff
 import pytest
 
 
-@pytest.fixture
-def stylish_flat_string():
-    with open('tests/fixtures/stylish_flat_string.txt',
-              'r') as stylish_flat_string:
-        content = stylish_flat_string.read()
-        return content
+def read_result(path_file):
+    with open(path_file, 'r') as file:
+        return file.read()
 
 
-@pytest.fixture
-def stylish_nested_string():
-    with open('tests/fixtures/stylish_nested_string.txt',
-              'r')as stylish_nested_string:
-        content = stylish_nested_string.read()
-        return content
+nested_file1 = 'tests/fixtures/nested_file3.json'
+nested_file2 = 'tests/fixtures/nested_file4.yml'
+flat_file1 = 'tests/fixtures/flat_file1.json'
+flat_file2 = 'tests/fixtures/flat_file2.yml'
+stylish_flat_string = 'tests/fixtures/stylish_flat_string.txt'
+stylish_nested_string = 'tests/fixtures/stylish_nested_string.txt'
+plain_flat_string = 'tests/fixtures/plain_flat_string.txt'
+plain_nested_string = 'tests/fixtures/plain_nested_string.txt'
+json_string = 'tests/fixtures/json_string.txt'
 
 
-@pytest.fixture
-def plain_flat_string():
-    with open('tests/fixtures/plain_flat_string.txt',
-              'r') as plain_flat_string:
-        content = plain_flat_string.read()
-        return content
-
-
-@pytest.fixture
-def plain_nested_string():
-    with open('tests/fixtures/plain_nested_string.txt',
-              'r') as plain_nested_string:
-        content = plain_nested_string.read()
-        return content
-
-
-@pytest.fixture
-def json_string():
-    with open('tests/fixtures/json_string.txt',
-              'r') as json_string:
-        content = json_string.read()
-        return content
-
-
-def test_generate_diff_flat_stylish(stylish_flat_string):
-    file1 = 'tests/fixtures/flat_file1.json'
-    file2 = 'tests/fixtures/flat_file2.json'
-    assert generate_diff(file1, file2, 'stylish') == stylish_flat_string
-
-    file1 = 'tests/fixtures/flat_file1.yml'
-    file2 = 'tests/fixtures/flat_file2.yml'
-    assert generate_diff(file1, file2, 'stylish') == stylish_flat_string
-
-
-def test_generate_diff_nested_stylish(stylish_nested_string):
-    file1 = 'tests/fixtures/nested_file3.json'
-    file2 = 'tests/fixtures/nested_file4.json'
-    assert generate_diff(file1, file2, 'stylish') == stylish_nested_string
-
-    file1 = 'tests/fixtures/nested_file3.yml'
-    file2 = 'tests/fixtures/nested_file4.yml'
-    assert generate_diff(file1, file2, 'stylish') == stylish_nested_string
-
-
-def test_generate_diff_flat_plain(plain_flat_string):
-    file1 = 'tests/fixtures/flat_file1.json'
-    file2 = 'tests/fixtures/flat_file2.json'
-    assert generate_diff(file1, file2, formatter='plain') == plain_flat_string
-
-    file1 = 'tests/fixtures/flat_file1.yml'
-    file2 = 'tests/fixtures/flat_file2.yml'
-    assert generate_diff(file1, file2, formatter='plain') == plain_flat_string
-
-
-def test_generate_diff_nested_plain(plain_nested_string):
-    file1 = 'tests/fixtures/nested_file3.json'
-    file2 = 'tests/fixtures/nested_file4.json'
-    assert generate_diff(file1, file2, formatter='plain') == plain_nested_string
-
-    file1 = 'tests/fixtures/nested_file3.yml'
-    file2 = 'tests/fixtures/nested_file4.yml'
-    assert generate_diff(file1, file2, formatter='plain') == plain_nested_string
-
-
-def test_generate_diff_json(json_string):
-    file1 = 'tests/fixtures/nested_file3.json'
-    file2 = 'tests/fixtures/nested_file4.json'
-    assert generate_diff(file1, file2, formatter='json') == json_string
+@pytest.mark.parametrize('file1, file2, formatter, result', [
+    (flat_file1, flat_file2, 'stylish', read_result(stylish_flat_string)),
+    (nested_file1, nested_file2, 'stylish', read_result(stylish_nested_string)),
+    (flat_file1, flat_file2, 'plain', read_result(plain_flat_string)),
+    (nested_file1, nested_file2, 'plain', read_result(plain_nested_string)),
+    (nested_file1, nested_file2, 'json', read_result(json_string))
+])
+def test_generate_diff_flat_stylish(file1, file2, formatter, result):
+    assert generate_diff(file1, file2, formatter) == result
