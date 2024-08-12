@@ -10,3 +10,6 @@ def get_formatter(formatter):
         return gen_json_format
     elif formatter == "stylish":
         return gen_stylish_format
+    else:
+        raise ValueError("Unsupported format. "
+                         "Expected 'stylish', 'plain' or 'json'")
