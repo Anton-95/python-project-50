@@ -1,53 +1,52 @@
-def gen_nested_format(diff, sep=' ', sep_count=4, depth=0):
+def gen_stylish_format(diff, sep=' ', sep_count=4, depth=0):
     depth += sep_count
     result_string = ''
 
     for value in diff:
 
-        if value.get('status') != 'nested':
-            if value.get('status') == 'added':
-                result_string += (f'{(depth - 2) * sep}+ '
-                                  f'{value['key']}: '
-                                  f'{to_str(value['value'],
-                                            depth,
-                                            sep_count,
-                                            sep)}\n')
-
-            elif value.get('status') == 'deleted':
-                result_string += (f'{(depth - 2) * sep}- '
-                                  f'{value['key']}: '
-                                  f'{to_str(value['value'],
-                                            depth,
-                                            sep_count,
-                                            sep)}\n')
-
-            elif value.get('status') is None:
-                result_string += (f'{depth * sep}'
-                                  f'{value['key']}: '
-                                  f'{to_str(value['value'],
-                                            depth,
-                                            sep_count,
-                                            sep)}\n')
-
-            elif value.get('status') == 'changed':
-                result_string += (f'{(depth - 2) * sep}- '
-                                  f'{value['key']}: {to_str(value['old_value'],
-                                                            depth,
-                                                            sep_count,
-                                                            sep)}\n')
-                result_string += (f'{(depth - 2) * sep}+ '
-                                  f'{value['key']}: {to_str(value['new_value'],
-                                                            depth,
-                                                            sep_count,
-                                                            sep)}\n')
-
         if value.get('status') == 'nested':
             result_string += (f'{depth * sep}'
                               f'{value['key']}: '
-                              f'{gen_nested_format(value['value'],
+                              f'{gen_stylish_format(value['value'],
                                  sep,
                                  sep_count,
                                  depth)}\n')
+
+        elif value.get('status') == 'added':
+            result_string += (f'{(depth - 2) * sep}+ '
+                              f'{value['key']}: '
+                              f'{to_str(value['value'],
+                                        depth,
+                                        sep_count,
+                                        sep)}\n')
+
+        elif value.get('status') == 'deleted':
+            result_string += (f'{(depth - 2) * sep}- '
+                              f'{value['key']}: '
+                              f'{to_str(value['value'],
+                                        depth,
+                                        sep_count,
+                                        sep)}\n')
+
+        elif value.get('status') == 'changed':
+            result_string += (f'{(depth - 2) * sep}- '
+                              f'{value['key']}: {to_str(value['old_value'],
+                                                        depth,
+                                                        sep_count,
+                                                        sep)}\n')
+            result_string += (f'{(depth - 2) * sep}+ '
+                              f'{value['key']}: {to_str(value['new_value'],
+                                                        depth,
+                                                        sep_count,
+                                                        sep)}\n')
+
+        elif value.get('status') is None:
+            result_string += (f'{depth * sep}'
+                              f'{value['key']}: '
+                              f'{to_str(value['value'],
+                                        depth,
+                                        sep_count,
+                                        sep)}\n')
 
     result = '{\n' + result_string + (sep * (depth - sep_count)) + '}\n'
     return result.strip('\n')
