@@ -1,4 +1,11 @@
 def gen_plain_format(diff, path=''):
+    """
+    Returns a string in plain format
+
+    Args:
+        diff (list): List with differences
+        path (str, optional): Path to current element. Defaults to ''.
+    """
     result_string = ''
 
     for value in diff:
@@ -26,6 +33,12 @@ def gen_plain_format(diff, path=''):
 
 
 def to_str(value):
+    """
+    Converts value to string in plain format
+
+    Args:
+        value (bool, int, list, dict): Value to convert
+    """
     if isinstance(value, list) or isinstance(value, dict):
         return '[complex value]'
     elif value is None:

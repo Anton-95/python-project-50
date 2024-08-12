@@ -4,6 +4,15 @@ from gendiff.formatters.stylish import gen_stylish_format
 
 
 def get_formatter(formatter):
+    """
+    Returns a formatter function according to the given formatter
+
+    Args:
+        formatter (str): Formatter name
+
+    Raises:
+        ValueError: Unsupported formatter name
+    """
     if formatter == "plain":
         return gen_plain_format
     elif formatter == "json":

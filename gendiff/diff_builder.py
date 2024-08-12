@@ -1,5 +1,12 @@
 def builder(file1, file2):
+    """
+    Builds diff between two dicts and returns it as a list of dicts with the
+    following structure {'key': 'key', 'value': 'value', 'status': 'status'}
 
+    Args:
+        file1 (dict): First dict
+        file2 (dict): Second dict
+    """
     keys = file1.keys() | file2.keys()
     sorted_keys = sorted(keys)
 

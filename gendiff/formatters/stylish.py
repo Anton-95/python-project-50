@@ -1,4 +1,13 @@
 def gen_stylish_format(diff, sep=' ', sep_count=4, depth=0):
+    """
+    Returns a string in stylish format
+
+    Args:
+        diff (list): List with differences
+        sep (str, optional): Separator. Defaults to ' '.
+        sep_count (int, optional): Separator count. Defaults to 4.
+        depth (int, optional): Depth. Defaults to 0.
+    """
     depth += sep_count
     result_string = ''
 
@@ -53,6 +62,15 @@ def gen_stylish_format(diff, sep=' ', sep_count=4, depth=0):
 
 
 def dict_to_str(data, depth, sep_count, sep):
+    """
+    Converts dict to string in stylish format
+
+    Args:
+        data (dict): Dict to convert
+        depth (int): Depth
+        sep_count (int): Separator count
+        sep (str): Separator
+    """
     depth += sep_count
     result_string = ''
 
@@ -72,6 +90,15 @@ def dict_to_str(data, depth, sep_count, sep):
 
 
 def to_str(value, depth, sep_count, sep):
+    """
+    Converts value to string in stylish format
+
+    Args:
+        value (bool, int, list, dict): Value to convert
+        depth (int): Depth
+        sep_count (int): Separator count
+        sep (str): Separator
+    """
     if isinstance(value, dict):
         return dict_to_str(value, depth, sep_count, sep)
     elif value is None:
