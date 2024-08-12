@@ -1,29 +1,81 @@
-from gendiff import generate_diff
 import pytest
+from gendiff import generate_diff
 
 
 def read_result(path_file):
-    with open(path_file, 'r') as file:
+    with open(path_file, "r") as file:
         return file.read()
 
 
-nested_file1 = 'tests/fixtures/nested_file3.json'
-nested_file2 = 'tests/fixtures/nested_file4.yml'
-flat_file1 = 'tests/fixtures/flat_file1.json'
-flat_file2 = 'tests/fixtures/flat_file2.yml'
-stylish_flat_string = 'tests/fixtures/stylish_flat_string.txt'
-stylish_nested_string = 'tests/fixtures/stylish_nested_string.txt'
-plain_flat_string = 'tests/fixtures/plain_flat_string.txt'
-plain_nested_string = 'tests/fixtures/plain_nested_string.txt'
-json_string = 'tests/fixtures/json_string.txt'
-
-
-@pytest.mark.parametrize('file1, file2, formatter, result', [
-    (flat_file1, flat_file2, 'stylish', read_result(stylish_flat_string)),
-    (nested_file1, nested_file2, 'stylish', read_result(stylish_nested_string)),
-    (flat_file1, flat_file2, 'plain', read_result(plain_flat_string)),
-    (nested_file1, nested_file2, 'plain', read_result(plain_nested_string)),
-    (nested_file1, nested_file2, 'json', read_result(json_string))
-])
-def test_generate_diff_flat_stylish(file1, file2, formatter, result):
+@pytest.mark.parametrize(
+    "file1, file2, formatter, result",
+    [
+        (
+            "tests/fixtures/flat_file1.json",
+            "tests/fixtures/flat_file2.yml",
+            "stylish",
+            read_result("tests/fixtures/stylish_flat_string.txt"),
+        ),
+        (
+            "tests/fixtures/nested_file3.json",
+            "tests/fixtures/nested_file4.yml",
+            "stylish",
+            read_result("tests/fixtures/stylish_nested_string.txt"),
+        ),
+        (
+            "tests/fixtures/flat_file1.json",
+            "tests/fixtures/flat_file2.yml",
+            "plain",
+            read_result("tests/fixtures/plain_flat_string.txt"),
+        ),
+        (
+            "tests/fixtures/nested_file3.json",
+            "tests/fixtures/nested_file4.yml",
+            "plain",
+            read_result("tests/fixtures/plain_nested_string.txt"),
+        ),
+        (
+            "tests/fixtures/nested_file3.json",
+            "tests/fixtures/nested_file4.yml",
+            "json",
+            read_result("tests/fixtures/json_string.txt"),
+        ),
+    ],
+)
+def test_generate_diff_formatters(file1, file2, formatter, result):
     assert generate_diff(file1, file2, formatter) == result
+
+
+@pytest.mark.parametrize(
+    "file1, file2, formatter",
+    [
+        (
+            "tests/fixtures/flat_file1.txt",
+            "tests/fixtures/flat_file2.yml",
+            "stylish",
+        ),
+    ]
+)
+def test_invalid_format_file(file1, file2, formatter):
+    with pytest.raises(ValueError,
+                       match=("Unsupported file format. "
+                              "Expected '.yaml', '.yml' or '.json'.")):
+        generate_diff(file1, file2, formatter)
+
+
+@pytest.mark.parametrize(
+    "file1, file2, formatter",
+    [
+        (
+            "tests/fixtures/flat_file1.json",
+            "tests/fixtures/flat_file2.yml",
+            "nested",
+        ),
+    ],
+)
+def test_invalid_formatter(file1, file2, formatter):
+    with pytest.raises(
+        ValueError,
+        match=("Unsupported format. Expected 'stylish', 'plain' or 'json'"),
+    ):
+        generate_diff(file1, file2, formatter)
